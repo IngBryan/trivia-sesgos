@@ -12,14 +12,15 @@
 
 ## Levantar
 
+Desde la raíz del repo (`trivia-sesgos/`):
 ```bash
 # backend (verificar JAVA_HOME antes)
 ./mvnw spring-boot:run     # mvnw.cmd en Windows
 ```
 → `http://localhost:8080`
 
+Desde `frontend/` (backend corriendo en paralelo):
 ```bash
-# frontend en dev (backend corriendo en paralelo)
 cd frontend
 npm install
 npm run dev
