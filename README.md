@@ -2,7 +2,7 @@
 ## Requisitos
 
 - JDK 25 (`JAVA_HOME` apuntando a esa versión — necesario para `mvnw`)
-- Node.js + npm
+- Node.js 22+ + npm
 
 ## Configuración (`src/main/resources/application.properties`)
 
