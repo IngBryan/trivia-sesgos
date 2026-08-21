@@ -10,8 +10,8 @@ import java.util.List;
 public class FlowConfig {
 
     @Bean
-    List<Step> flow(AttractStep attract, IntroStep intro,
+    List<Step> flow(AttractStep attract,
                     QuestionLoopStep question, FeedbackStep feedback) {
-        return List.of(attract, intro, question, feedback);
+        return List.of(attract, question, feedback);
     }
 }

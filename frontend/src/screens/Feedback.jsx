@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
 import { motion } from 'motion/react'
-import confetti from 'canvas-confetti'
+import { Sparkles, UserRound } from 'lucide-react'
 
 const columnsVariants = {
   hidden: {},
@@ -21,21 +20,26 @@ const colVariants = {
   },
 }
 
-export default function Feedback({ payload }) {
-  useEffect(() => {
-    if (payload?.correct) {
-      const timer = setTimeout(() => {
-        confetti({
-          particleCount: 120,
-          spread: 80,
-          origin: { y: 0.6 },
-          colors: ['#4caf50', '#81c784', '#a5d6a7', '#4a6cf7', '#9333ea'],
-        })
-      }, 400)
-      return () => clearTimeout(timer)
-    }
-  }, [payload?.correct])
 
+function IconCircle({ icon, gradient }) {
+  return (
+    <div style={{
+      width: 'clamp(80px, 12vmin, 130px)',
+      height: 'clamp(80px, 12vmin, 130px)',
+      borderRadius: '50%',
+      background: gradient,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#fff',
+      margin: '0 auto clamp(0.75rem, 2vh, 1.5rem)',
+    }}>
+      {icon}
+    </div>
+  )
+}
+
+export default function Feedback({ payload }) {
   if (!payload) return null
 
   return (
@@ -66,34 +70,13 @@ export default function Feedback({ payload }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, duration: 0.4 }}
         style={{
-          fontSize: 'clamp(1.4rem, 4.5vmin, 3.2rem)',
+          fontSize: 'clamp(1.5rem, 5vmin, 3.5rem)',
           fontWeight: 700,
-          marginBottom: 'clamp(0.5rem, 1.5vh, 1rem)',
+          marginBottom: 'clamp(1rem, 3vh, 2rem)',
         }}
       >
         {payload.questionText}
       </motion.h1>
-
-      {/* Resultado: correcto o incorrecto */}
-      <motion.p
-        initial={payload.correct
-          ? { opacity: 0, scale: 0.5 }
-          : { opacity: 0, x: 0 }}
-        animate={payload.correct
-          ? { opacity: 1, scale: 1 }
-          : { opacity: 1, x: [0, -12, 12, -12, 12, 0] }}
-        transition={payload.correct
-          ? { type: 'spring', stiffness: 400, damping: 12, delay: 0.2 }
-          : { duration: 0.5, delay: 0.2 }}
-        style={{
-          fontSize: 'clamp(1.2rem, 3vmin, 2rem)',
-          color: payload.correct ? 'var(--correct-border)' : 'var(--wrong-border)',
-          fontWeight: 600,
-          marginBottom: 'clamp(1.5rem, 5vh, 3.5rem)',
-        }}
-      >
-        {payload.correct ? '¡Correcto!' : 'Incorrecto'}
-      </motion.p>
 
       <motion.div
         className="feedback-columns"
@@ -102,55 +85,67 @@ export default function Feedback({ payload }) {
         animate="visible"
       >
         {/* Tu elección */}
-        <motion.div className="fb-col" variants={colVariants}>
-          <p className="fb-col-label">Tu elección</p>
-          {payload.correct ? (
-            <motion.div
-              className="fb-col-letter"
-              style={{ background: 'var(--correct-border)' }}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 15, delay: 0.4 }}
-            >
-              ✓
-            </motion.div>
-          ) : (
-            <motion.div
-              className="fb-col-letter"
-              style={{ background: 'var(--wrong-border)' }}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1, x: [0, -8, 8, -8, 0] }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              ✗
-            </motion.div>
-          )}
-          <p className="fb-col-text">{payload.chosenText}</p>
+        <motion.div
+          className="fb-col"
+          variants={colVariants}
+          style={{
+            border: '2px solid #0ea5a0',
+            boxShadow: '0 0 28px rgba(14, 165, 160, 0.35)',
+            background: 'linear-gradient(160deg, #0d1f2d 0%, var(--card-bg) 60%)',
+          }}
+        >
+          <p className="fb-col-label" style={{ color: '#0ea5a0' }}>Tu elección</p>
+          <IconCircle
+            gradient="var(--option-b)"
+            icon={<UserRound size="55%" />}
+          />
+          <p style={{
+            fontSize: 'clamp(1.5rem, 3.5vmin, 2.5rem)',
+            fontWeight: 700,
+            color: '#fff',
+            lineHeight: 1.3,
+          }}>{payload.chosenText}</p>
         </motion.div>
 
-        {/* Respuesta correcta (solo si erró y hay correcta) */}
-        {payload.correctText && !payload.correct && (
-          <motion.div className="fb-col" variants={colVariants}>
-            <p className="fb-col-label">Respuesta correcta</p>
-            <motion.div
-              className="fb-col-letter"
-              style={{ background: 'var(--correct-border)' }}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 15, delay: 0.55 }}
-            >
-              ✓
-            </motion.div>
-            <p className="fb-col-text">{payload.correctText}</p>
-          </motion.div>
-        )}
+        {/* La IA elegiría */}
+        <motion.div
+          className="fb-col"
+          variants={colVariants}
+          style={{
+            border: '2px solid #9333ea',
+            boxShadow: '0 0 28px rgba(147, 51, 234, 0.35)',
+            background: 'linear-gradient(160deg, #1a0d2d 0%, var(--card-bg) 60%)',
+          }}
+        >
+          <p className="fb-col-label" style={{ color: '#9333ea' }}>La IA elegiría</p>
+          <IconCircle
+            gradient="var(--option-c)"
+            icon={<Sparkles size="55%" />}
+          />
+          <p style={{
+            fontSize: 'clamp(1.5rem, 3.5vmin, 2.5rem)',
+            fontWeight: 700,
+            color: '#fff',
+            lineHeight: 1.3,
+          }}>
+            {payload.correctText ?? 'No registrada'}
+          </p>
+        </motion.div>
 
         {/* ¿Por qué? */}
-        <motion.div className="fb-col por-que" variants={colVariants}>
-          <p className="fb-col-label">¿Por qué?</p>
+        <motion.div
+          className="fb-col por-que"
+          variants={colVariants}
+          style={{
+            border: '2px solid #4a6cf7',
+            boxShadow: '0 0 28px rgba(74, 108, 247, 0.35)',
+            background: 'linear-gradient(160deg, #0d1228 0%, var(--card-bg) 60%)',
+          }}
+        >
+          <p className="fb-col-label" style={{ color: '#4a6cf7' }}>¿Por qué?</p>
           <p className="fb-col-text">
-            {payload.explanation ||
-              'La respuesta de la IA refleja sesgos presentes en los datos con los que fue entrenada. Los modelos de lenguaje reproducen patrones y estereotipos que aparecen con frecuencia en los textos de internet.'}
+            {payload.explanation ??
+              'La IA aprende de grandes volúmenes de texto humano y reproduce los estereotipos de género que aparecen con frecuencia en esos datos.'}
           </p>
         </motion.div>
       </motion.div>

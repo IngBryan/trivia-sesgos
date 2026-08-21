@@ -20,6 +20,7 @@ public class FlowEngine implements ApplicationRunner {
     private final FlowContext ctx = new FlowContext();
 
     private int currentIndex = 0;
+    private int savedIndex   = -1;   // índice guardado al entrar a info-overlay
 
     public FlowEngine(List<Step> flow, List<InputSource> sources, ScreenBroadcaster broadcaster) {
         this.flow = flow;
@@ -37,6 +38,10 @@ public class FlowEngine implements ApplicationRunner {
             while (true) {
                 try {
                     InputEvent ev = queue.take();
+                    if (handleInfoToggle(ev)) {
+                        broadcaster.send(currentStep().view(ctx));
+                        continue;
+                    }
                     Outcome outcome = currentStep().handle(ev, ctx);
                     apply(outcome);
                     broadcaster.send(currentStep().view(ctx));
@@ -46,6 +51,39 @@ public class FlowEngine implements ApplicationRunner {
                 }
             }
         });
+    }
+
+    /**
+     * Maneja la tecla "i" (solo teclado) para hacer toggle a la pantalla inicial.
+     * No llama onEnter/onExit para preservar el estado exacto de la pregunta.
+     * Mientras estamos en overlay (savedIndex >= 0) consume también cualquier
+     * otra tecla para que ATTRACT no avance el flujo normal.
+     * @return true si el evento fue consumido y no debe procesarse más.
+     */
+    private boolean handleInfoToggle(InputEvent ev) {
+        boolean atAttract = "ATTRACT".equals(currentStep().name());
+
+        // Bloquear cualquier tecla mientras estamos en overlay
+        if (atAttract && savedIndex >= 0 && !"keyboard".equals(ev.source())) {
+            return true;
+        }
+
+        if (!"keyboard".equals(ev.source()) || !"i".equalsIgnoreCase(ev.value())) {
+            // Si estamos en overlay con teclado y no es "i", bloquear también
+            return atAttract && savedIndex >= 0;
+        }
+
+        if (!atAttract) {
+            // Ir a la pantalla inicial, guardar posición
+            savedIndex = currentIndex;
+            currentIndex = indexOfStep("ATTRACT");
+        } else if (savedIndex >= 0) {
+            // Volver a donde estábamos
+            currentIndex = savedIndex;
+            savedIndex = -1;
+        }
+        // Si atAttract y sin savedIndex: inicio natural de la app, ignorar
+        return true;
     }
 
     public BlockingQueue<InputEvent> getQueue() {
@@ -80,5 +118,12 @@ public class FlowEngine implements ApplicationRunner {
                 return;
             }
         }
+    }
+
+    private int indexOfStep(String name) {
+        for (int i = 0; i < flow.size(); i++) {
+            if (flow.get(i).name().equals(name)) return i;
+        }
+        return 0;
     }
 }
