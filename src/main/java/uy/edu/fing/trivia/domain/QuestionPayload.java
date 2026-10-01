@@ -5,6 +5,7 @@ import java.util.List;
 public record QuestionPayload(
     int index,
     int total,
+    String type,
     String text,
     List<OptionDto> options
 ) {

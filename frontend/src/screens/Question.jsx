@@ -22,8 +22,16 @@ const cardVariants = {
   },
 }
 
+const HEADINGS = {
+  SESGO: '¿Cómo completaría esta frase una inteligencia artificial?',
+  INVESTIGACION: '¿Qué problemática te interesa resolver?',
+}
+
 export default function Question({ payload }) {
   if (!payload) return null
+
+  const isResearch = payload.type === 'INVESTIGACION'
+  const heading = HEADINGS[payload.type] || HEADINGS.SESGO
 
   return (
     <motion.div
@@ -58,22 +66,24 @@ export default function Question({ payload }) {
           marginBottom: 'clamp(1rem, 3vh, 2rem)',
         }}
       >
-        ¿Cómo completaría esta frase una inteligencia artificial?
+        {heading}
       </motion.h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25, duration: 0.4 }}
-        style={{
-          fontSize: 'clamp(1.5rem, 4.5vmin, 3.2rem)',
-          fontWeight: 300,
-          marginBottom: 'clamp(2rem, 6vh, 4rem)',
-          lineHeight: 1.4,
-        }}
-      >
-        "{payload.text}"
-      </motion.p>
+      {!isResearch && (
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.4 }}
+          style={{
+            fontSize: 'clamp(1.5rem, 4.5vmin, 3.2rem)',
+            fontWeight: 300,
+            marginBottom: 'clamp(2rem, 6vh, 4rem)',
+            lineHeight: 1.4,
+          }}
+        >
+          "{payload.text}"
+        </motion.p>
+      )}
 
       <motion.div
         className="options-row"

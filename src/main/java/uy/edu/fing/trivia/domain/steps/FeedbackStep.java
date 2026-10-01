@@ -38,18 +38,23 @@ public class FeedbackStep implements Step {
         List<Question> questions = ctx.get("questions");
         Answer last = answers.getLast();
         Question q = last.getQuestion();
+        Option chosen = last.getOption();
         Option correct = q.getCorrect();
 
         boolean isCorrect = correct != null
-                && correct.getId().equals(last.getOption().getId());
+                && correct.getId().equals(chosen.getId());
 
         var payload = new FeedbackPayload(
                 (int) ctx.get("questionIndex") + 1,
                 questions.size(),
+                q.getType(),
                 q.getText(),
-                last.getOption().getText(),
+                chosen.getText(),
                 correct != null ? correct.getText() : null,
-                isCorrect
+                isCorrect,
+                chosen.getGroupName(),
+                chosen.getGroupDescription(),
+                chosen.getPhotoPathList()
         );
         return ScreenState.of("FEEDBACK", payload, "fade");
     }

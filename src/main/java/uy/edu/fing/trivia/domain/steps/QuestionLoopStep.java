@@ -7,7 +7,9 @@ import uy.edu.fing.trivia.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class QuestionLoopStep implements Step {
@@ -30,8 +32,8 @@ public class QuestionLoopStep implements Step {
     public void onEnter(FlowContext ctx) {
         List<Question> existing = ctx.get("questions");
         if (existing == null) {
-            // Primera vez: cargar todo
-            List<Question> all = questionRepo.findAll();
+            // Primera vez: cargar todo, intercalando una pregunta de cada tipo
+            List<Question> all = interleaveByType(questionRepo.findAll());
             ctx.put("questions", all);
             ctx.put("questionIndex", 0);
             ctx.put("answers", new ArrayList<Answer>());
@@ -95,7 +97,7 @@ public class QuestionLoopStep implements Step {
                 .map(o -> new QuestionPayload.OptionDto(o.getId(), o.getText()))
                 .toList();
 
-        var payload = new QuestionPayload(index + 1, questions.size(), q.getText(), dtos);
+        var payload = new QuestionPayload(index + 1, questions.size(), q.getType(), q.getText(), dtos);
         return ScreenState.of("QUESTION", payload, "slideLeft");
     }
 
@@ -103,6 +105,36 @@ public class QuestionLoopStep implements Step {
         List<Question> questions = ctx.get("questions");
         int index = ctx.get("questionIndex");
         return questions.get(index);
+    }
+
+    /**
+     * Intercala las preguntas por tipo (una de cada tipo por vuelta). El orden dentro de cada
+     * tipo se mezcla al azar en cada partida, para que varias pantallas de un mismo grupo de
+     * investigación (ej. SIS con 3 problemáticas) no queden agrupadas por el orden de carga.
+     */
+    private List<Question> interleaveByType(List<Question> questions) {
+        Map<String, List<Question>> byType = new LinkedHashMap<>();
+        for (Question q : questions) {
+            byType.computeIfAbsent(q.getType(), k -> new ArrayList<>()).add(q);
+        }
+        List<List<Question>> groups = new ArrayList<>(byType.values());
+        groups.forEach(Collections::shuffle);
+
+        List<Question> result = new ArrayList<>(questions.size());
+        int index = 0;
+        boolean added;
+        do {
+            added = false;
+            for (List<Question> group : groups) {
+                if (index < group.size()) {
+                    result.add(group.get(index));
+                    added = true;
+                }
+            }
+            index++;
+        } while (added);
+
+        return result;
     }
 
     private void shuffleOptions(Question q, FlowContext ctx) {

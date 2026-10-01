@@ -1,5 +1,8 @@
-import { motion } from 'motion/react'
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { Sparkles, UserRound } from 'lucide-react'
+
+const PHOTO_INTERVAL_MS = 2500
 
 const columnsVariants = {
   hidden: {},
@@ -39,12 +42,78 @@ function IconCircle({ icon, gradient }) {
   )
 }
 
-export default function Feedback({ payload }) {
-  if (!payload) return null
+function PhotoCarousel({ photos, alt }) {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    setIndex(0)
+    if (photos.length <= 1) return
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % photos.length)
+    }, PHOTO_INTERVAL_MS)
+    return () => clearInterval(id)
+  }, [photos])
+
+  if (photos.length === 0) return null
+
+  return (
+    <div className="research-photo-frame">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={photos[index]}
+          src={photos[index]}
+          alt={alt}
+          className="research-photo"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+        />
+      </AnimatePresence>
+      {photos.length > 1 && (
+        <div className="research-photo-dots">
+          {photos.map((p, i) => (
+            <span key={p} className={`research-photo-dot ${i === index ? 'active' : ''}`} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ResearchFeedback({ payload }) {
+  const photos = payload.photoPaths ?? []
 
   return (
     <motion.div
-      className="screen"
+      className="research-card"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, type: 'spring', stiffness: 250, damping: 22 }}
+    >
+      <div className="research-col research-col-photo">
+        {payload.chosenText && (
+          <p className="research-chosen-label">{payload.chosenText}</p>
+        )}
+        <PhotoCarousel photos={photos} alt={payload.groupName} />
+      </div>
+
+      <div className="research-col research-col-info">
+        <p className="research-group-name">{payload.groupName ?? 'Grupo por confirmar'}</p>
+        <p className="research-description">{payload.groupDescription ?? 'Información del grupo próximamente.'}</p>
+      </div>
+    </motion.div>
+  )
+}
+
+export default function Feedback({ payload }) {
+  if (!payload) return null
+
+  const isResearch = payload.type === 'INVESTIGACION'
+
+  return (
+    <motion.div
+      className={`screen${isResearch ? ' screen-research' : ''}`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, x: -60 }}
@@ -55,30 +124,34 @@ export default function Feedback({ payload }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
         style={{
-          fontSize: 'clamp(0.85rem, 2vmin, 1.3rem)',
+          fontSize: 'clamp(0.75rem, 1.6vmin, 1.1rem)',
           color: 'var(--text-dim)',
           textTransform: 'uppercase',
           letterSpacing: '2px',
-          marginBottom: 'clamp(0.75rem, 2vh, 1.5rem)',
+          marginBottom: isResearch ? 'clamp(0.4rem, 1vh, 0.75rem)' : 'clamp(0.75rem, 2vh, 1.5rem)',
         }}
       >
         Pregunta {payload.index} de {payload.total}
       </motion.p>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.15, duration: 0.4 }}
-        style={{
-          fontSize: 'clamp(1.5rem, 5vmin, 3.5rem)',
-          fontWeight: 700,
-          marginBottom: 'clamp(1rem, 3vh, 2rem)',
-        }}
-      >
-        {payload.questionText}
-      </motion.h1>
+      {!isResearch && (
+        <motion.h1
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.4 }}
+          style={{
+            fontSize: 'clamp(1.5rem, 5vmin, 3.5rem)',
+            fontWeight: 700,
+            marginBottom: 'clamp(1rem, 3vh, 2rem)',
+          }}
+        >
+          {payload.questionText}
+        </motion.h1>
+      )}
 
-      <motion.div
+      {isResearch && <ResearchFeedback payload={payload} />}
+
+      {!isResearch && <motion.div
         className="feedback-columns"
         variants={columnsVariants}
         initial="hidden"
@@ -148,16 +221,16 @@ export default function Feedback({ payload }) {
               'La IA aprende de grandes volúmenes de texto humano y reproduce los estereotipos de género que aparecen con frecuencia en esos datos.'}
           </p>
         </motion.div>
-      </motion.div>
+      </motion.div>}
 
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ delay: 1 }}
         style={{
-          marginTop: 'clamp(1.5rem, 4vh, 3rem)',
+          marginTop: isResearch ? 'clamp(0.4rem, 1vh, 0.75rem)' : 'clamp(1.5rem, 4vh, 3rem)',
           color: 'var(--text-dim)',
-          fontSize: 'clamp(0.85rem, 2vmin, 1.3rem)',
+          fontSize: 'clamp(0.75rem, 1.6vmin, 1.1rem)',
         }}
       >
         Presioná cualquier botón para continuar
