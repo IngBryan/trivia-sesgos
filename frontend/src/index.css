@@ -8,6 +8,7 @@
   --option-a: linear-gradient(135deg, #4a6cf7, #3b5de7);
   --option-b: linear-gradient(135deg, #0ea5a0, #0d9488);
   --option-c: linear-gradient(135deg, #9333ea, #7c3aed);
+  --option-yellow: linear-gradient(135deg, #facc15, #eab308);
   --correct-bg: #1a3a2a;
   --correct-border: #4caf50;
   --wrong-bg: #3a1a1a;
@@ -74,7 +75,9 @@ body {
 
 .option-card.opt-a { background: var(--option-a); }
 .option-card.opt-b { background: var(--option-b); }
-.option-card.opt-c { background: var(--option-c); }
+.option-card.opt-c { background: var(--option-yellow); }
+.option-card.opt-c .option-text { color: #1a1a1a; }
+.option-card.opt-c .option-letter { background: rgba(0,0,0,0.15); color: #1a1a1a; }
 
 .option-letter {
   width: clamp(52px, 7vmin, 80px);
@@ -195,11 +198,26 @@ body {
 }
 
 .research-photo-frame {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.3rem, 0.8vh, 0.6rem);
   flex: 1;
   min-height: 0;
-  border-radius: clamp(12px, 1.5vw, 20px);
+}
+
+.research-photo-row {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: clamp(0.3rem, 0.8vh, 0.6rem);
+}
+
+.research-photo-cell {
+  position: relative;
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
+  border-radius: clamp(8px, 1vw, 14px);
 }
 
 .research-photo {
@@ -208,28 +226,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.research-photo-dots {
-  position: absolute;
-  bottom: clamp(0.6rem, 1.5vh, 1rem);
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.research-photo-dot {
-  width: clamp(8px, 1.2vmin, 12px);
-  height: clamp(8px, 1.2vmin, 12px);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-  transition: background 0.3s;
-}
-
-.research-photo-dot.active {
-  background: #fff;
 }
 
 .research-group-name {

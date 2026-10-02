@@ -14,6 +14,9 @@ import java.util.Map;
 @Component
 public class QuestionLoopStep implements Step {
 
+    private static final int GENDER_QUESTIONS_PER_GAME = 5;
+    private static final int INCO_QUESTIONS_PER_GAME = 3;
+
     private final QuestionRepository questionRepo;
     private final AnswerRepository answerRepo;
 
@@ -33,7 +36,13 @@ public class QuestionLoopStep implements Step {
         List<Question> existing = ctx.get("questions");
         if (existing == null) {
             // Primera vez: cargar todo, intercalando una pregunta de cada tipo
-            List<Question> all = interleaveByType(questionRepo.findAll());
+            boolean inco = ModeSelectStep.INCO.equals(ctx.get(ModeSelectStep.MODE_KEY));
+            String type = inco ? "INVESTIGACION" : "SESGO";
+            int perGame = inco ? INCO_QUESTIONS_PER_GAME : GENDER_QUESTIONS_PER_GAME;
+            // El orden dentro del tipo ya es aleatorio: cada partida toma un subconjunto distinto
+            List<Question> all = interleaveByType(questionRepo.findAll().stream()
+                    .filter(q -> type.equals(q.getType()))
+                    .toList()).stream().limit(perGame).toList();
             ctx.put("questions", all);
             ctx.put("questionIndex", 0);
             ctx.put("answers", new ArrayList<Answer>());

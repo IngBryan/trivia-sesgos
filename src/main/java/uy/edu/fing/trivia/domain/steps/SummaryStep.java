@@ -20,7 +20,7 @@ public class SummaryStep implements Step {
     @Override
     public Outcome handle(InputEvent ev, FlowContext ctx) {
         ctx.clear();
-        return new Outcome.Goto("ATTRACT");
+        return new Outcome.Goto("MODE_SELECT");
     }
 
     @Override

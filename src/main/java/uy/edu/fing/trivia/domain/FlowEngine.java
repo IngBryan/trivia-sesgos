@@ -3,15 +3,19 @@ package uy.edu.fing.trivia.domain;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import uy.edu.fing.trivia.domain.steps.ModeSelectStep;
 import uy.edu.fing.trivia.inputs.InputSource;
 import uy.edu.fing.trivia.stream.ScreenBroadcaster;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Component
 public class FlowEngine implements ApplicationRunner {
+
+    private static final Set<String> INTRO_STEPS = Set.of("ATTRACT", "INCO_ATTRACT");
 
     private final BlockingQueue<InputEvent> queue = new LinkedBlockingQueue<>();
     private final List<Step> flow;
@@ -61,7 +65,7 @@ public class FlowEngine implements ApplicationRunner {
      * @return true si el evento fue consumido y no debe procesarse más.
      */
     private boolean handleInfoToggle(InputEvent ev) {
-        boolean atAttract = "ATTRACT".equals(currentStep().name());
+        boolean atAttract = INTRO_STEPS.contains(currentStep().name());
 
         // Bloquear cualquier tecla mientras estamos en overlay
         if (atAttract && savedIndex >= 0 && !"keyboard".equals(ev.source())) {
@@ -76,7 +80,8 @@ public class FlowEngine implements ApplicationRunner {
         if (!atAttract) {
             // Ir a la pantalla inicial, guardar posición
             savedIndex = currentIndex;
-            currentIndex = indexOfStep("ATTRACT");
+            currentIndex = indexOfStep(
+                    ModeSelectStep.INCO.equals(ctx.get(ModeSelectStep.MODE_KEY)) ? "INCO_ATTRACT" : "ATTRACT");
         } else if (savedIndex >= 0) {
             // Volver a donde estábamos
             currentIndex = savedIndex;

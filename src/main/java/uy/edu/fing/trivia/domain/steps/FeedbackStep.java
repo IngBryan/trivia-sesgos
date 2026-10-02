@@ -29,7 +29,7 @@ public class FeedbackStep implements Step {
 
         // No quedan más preguntas → volver al inicio
         ctx.clear();
-        return new Outcome.Goto("ATTRACT");
+        return new Outcome.Goto("THANKS");
     }
 
     @Override

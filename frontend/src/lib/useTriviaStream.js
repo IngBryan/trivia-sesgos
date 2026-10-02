@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 export function useTriviaStream() {
-  const [state, setState] = useState({ version: 0, screen: 'ATTRACT', payload: null, transition: 'fade' })
+  const [state, setState] = useState({ version: 0, screen: 'MODE_SELECT', payload: null, transition: 'fade' })
   const versionRef = useRef(0)
 
   useEffect(() => {

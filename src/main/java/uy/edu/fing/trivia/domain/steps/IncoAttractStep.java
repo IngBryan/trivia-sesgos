@@ -4,11 +4,11 @@ import org.springframework.stereotype.Component;
 import uy.edu.fing.trivia.domain.*;
 
 @Component
-public class AttractStep implements Step {
+public class IncoAttractStep implements Step {
 
     @Override
     public String name() {
-        return "ATTRACT";
+        return "INCO_ATTRACT";
     }
 
     @Override
@@ -16,12 +16,11 @@ public class AttractStep implements Step {
 
     @Override
     public Outcome handle(InputEvent ev, FlowContext ctx) {
-        // cualquier tecla arranca
         return new Outcome.Goto("QUESTION");
     }
 
     @Override
     public ScreenState view(FlowContext ctx) {
-        return ScreenState.of("ATTRACT");
+        return ScreenState.of("INCO_ATTRACT");
     }
 }

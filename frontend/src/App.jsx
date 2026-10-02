@@ -1,21 +1,27 @@
 import { useEffect } from 'react'
 import { AnimatePresence } from 'motion/react'
 import { useTriviaStream } from './lib/useTriviaStream'
+import ModeSelect from './screens/ModeSelect'
 import Attract from './screens/Attract'
+import IncoAttract from './screens/IncoAttract'
 import Intro from './screens/Intro'
 import Question from './screens/Question'
 import Feedback from './screens/Feedback'
+import Thanks from './screens/Thanks'
 
 const SCREENS = {
+  MODE_SELECT: ModeSelect,
   ATTRACT: Attract,
+  INCO_ATTRACT: IncoAttract,
   INTRO: Intro,
   QUESTION: Question,
   FEEDBACK: Feedback,
+  THANKS: Thanks,
 }
 
 function App() {
   const state = useTriviaStream()
-  const Screen = SCREENS[state.screen] || Attract
+  const Screen = SCREENS[state.screen] || ModeSelect
 
   useEffect(() => {
     const map = { '1': '0', '2': '1', '3': '2', a: '0', b: '1', c: '2' }

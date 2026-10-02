@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion } from 'motion/react'
 import { Sparkles, UserRound } from 'lucide-react'
-
-const PHOTO_INTERVAL_MS = 2500
 
 const columnsVariants = {
   hidden: {},
@@ -42,41 +39,41 @@ function IconCircle({ icon, gradient }) {
   )
 }
 
-function PhotoCarousel({ photos, alt }) {
-  const [index, setIndex] = useState(0)
+function splitRows(photos) {
+  const rows = Math.max(1, Math.round(Math.sqrt(photos.length)))
+  const base = Math.floor(photos.length / rows)
+  const extra = photos.length % rows
+  const result = []
+  let i = 0
+  for (let r = 0; r < rows; r++) {
+    const size = base + (r < extra ? 1 : 0)
+    result.push(photos.slice(i, i + size))
+    i += size
+  }
+  return result
+}
 
-  useEffect(() => {
-    setIndex(0)
-    if (photos.length <= 1) return
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % photos.length)
-    }, PHOTO_INTERVAL_MS)
-    return () => clearInterval(id)
-  }, [photos])
-
+function PhotoAlbum({ photos, alt }) {
   if (photos.length === 0) return null
 
+  let order = 0
   return (
     <div className="research-photo-frame">
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={photos[index]}
-          src={photos[index]}
-          alt={alt}
-          className="research-photo"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-        />
-      </AnimatePresence>
-      {photos.length > 1 && (
-        <div className="research-photo-dots">
-          {photos.map((p, i) => (
-            <span key={p} className={`research-photo-dot ${i === index ? 'active' : ''}`} />
+      {splitRows(photos).map((row, r) => (
+        <div className="research-photo-row" key={r}>
+          {row.map((src) => (
+            <motion.div
+              className="research-photo-cell"
+              key={src}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 + 0.06 * order++, duration: 0.4 }}
+            >
+              <img className="research-photo" src={src} alt={alt} />
+            </motion.div>
           ))}
         </div>
-      )}
+      ))}
     </div>
   )
 }
@@ -95,7 +92,7 @@ function ResearchFeedback({ payload }) {
         {payload.chosenText && (
           <p className="research-chosen-label">{payload.chosenText}</p>
         )}
-        <PhotoCarousel photos={photos} alt={payload.groupName} />
+        <PhotoAlbum photos={photos} alt={payload.groupName} />
       </div>
 
       <div className="research-col research-col-info">
