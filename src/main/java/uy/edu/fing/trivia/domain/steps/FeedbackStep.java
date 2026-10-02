@@ -28,7 +28,7 @@ public class FeedbackStep implements Step {
         }
 
         // No quedan más preguntas → volver al inicio
-        ctx.clear();
+        // El contexto se conserva para armar la pantalla final; ModeSelectStep lo limpia al volver.
         return new Outcome.Goto("THANKS");
     }
 
