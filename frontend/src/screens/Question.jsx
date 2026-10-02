@@ -49,6 +49,7 @@ export default function Question({ payload }) {
           fontSize: 'clamp(0.85rem, 2vmin, 1.3rem)',
           color: 'var(--text-dim)',
           textTransform: 'uppercase',
+          fontFamily: 'var(--arcade-font)',
           letterSpacing: '2px',
           marginBottom: 'clamp(0.75rem, 2vh, 1.5rem)',
         }}
@@ -56,7 +57,7 @@ export default function Question({ payload }) {
         Pregunta {payload.index} de {payload.total}
       </motion.p>
 
-      <motion.h1
+      <motion.h1 className="arcade-heading"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, type: 'spring', stiffness: 250, damping: 20 }}
@@ -105,7 +106,7 @@ export default function Question({ payload }) {
         ))}
       </motion.div>
 
-      <motion.p
+      <motion.p className="arcade-hint"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ delay: 0.6 }}

@@ -53,6 +53,8 @@ function splitRows(photos) {
   return result
 }
 
+const FRAME_COLORS = ['#4a6cf7', '#0ea5a0', '#facc15']
+
 function PhotoAlbum({ photos, alt }) {
   if (photos.length === 0) return null
 
@@ -61,17 +63,22 @@ function PhotoAlbum({ photos, alt }) {
     <div className="research-photo-frame">
       {splitRows(photos).map((row, r) => (
         <div className="research-photo-row" key={r}>
-          {row.map((src) => (
-            <motion.div
-              className="research-photo-cell"
-              key={src}
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + 0.06 * order++, duration: 0.4 }}
-            >
-              <img className="research-photo" src={src} alt={alt} />
-            </motion.div>
-          ))}
+          {row.map((src) => {
+            const i = order++
+            return (
+              <motion.div
+                className="research-photo-cell"
+                key={src}
+                style={{ '--frame': FRAME_COLORS[i % FRAME_COLORS.length] }}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: [0.7, 1.06, 1] }}
+                transition={{ delay: 0.3 + 0.07 * i, duration: 0.4 }}
+              >
+                <img className="research-photo" src={src} alt={alt} />
+                <span className="research-photo-corners" />
+              </motion.div>
+            )
+          })}
         </div>
       ))}
     </div>
@@ -124,6 +131,7 @@ export default function Feedback({ payload }) {
           fontSize: 'clamp(0.75rem, 1.6vmin, 1.1rem)',
           color: 'var(--text-dim)',
           textTransform: 'uppercase',
+          fontFamily: 'var(--arcade-font)',
           letterSpacing: '2px',
           marginBottom: isResearch ? 'clamp(0.4rem, 1vh, 0.75rem)' : 'clamp(0.75rem, 2vh, 1.5rem)',
         }}
@@ -132,7 +140,7 @@ export default function Feedback({ payload }) {
       </motion.p>
 
       {!isResearch && (
-        <motion.h1
+        <motion.h1 className="arcade-heading"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.4 }}
@@ -220,7 +228,7 @@ export default function Feedback({ payload }) {
         </motion.div>
       </motion.div>}
 
-      <motion.p
+      <motion.p className="arcade-hint"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ delay: 1 }}

@@ -33,6 +33,7 @@ export default function IncoAttract() {
         <p style={{
           fontSize: 'clamp(0.75rem, 1.4vmin, 1rem)',
           textTransform: 'uppercase',
+          fontFamily: 'var(--arcade-font)',
           letterSpacing: '3px',
           color: 'var(--text-dim)',
           marginBottom: 'clamp(1rem, 2.5vh, 2rem)',
@@ -40,7 +41,7 @@ export default function IncoAttract() {
           Trivia interactiva · InCo
         </p>
 
-        <h1 style={{
+        <h1 className="arcade-title" style={{
           fontSize: 'clamp(2rem, 5.5vmin, 4rem)',
           fontWeight: 800,
           lineHeight: 1.15,
@@ -49,7 +50,7 @@ export default function IncoAttract() {
           Conocé qué hacemos en el InCo
         </h1>
 
-        <motion.p
+        <motion.p className="arcade-hint"
           animate={{ opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           style={{
@@ -84,6 +85,7 @@ export default function IncoAttract() {
           <p style={{
             fontSize: 'clamp(0.7rem, 1.2vmin, 0.9rem)',
             textTransform: 'uppercase',
+          fontFamily: 'var(--arcade-font)',
             letterSpacing: '2px',
             color: '#0ea5a0',
             marginBottom: '0.6em',
@@ -114,6 +116,7 @@ export default function IncoAttract() {
           <p style={{
             fontSize: 'clamp(0.7rem, 1.2vmin, 0.9rem)',
             textTransform: 'uppercase',
+          fontFamily: 'var(--arcade-font)',
             letterSpacing: '2px',
             color: '#eab308',
             marginBottom: '0.6em',
