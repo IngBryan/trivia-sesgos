@@ -31,9 +31,8 @@ export default function IncoAttract() {
         }}
       >
         <p style={{
-          fontSize: 'clamp(0.75rem, 1.4vmin, 1rem)',
+          fontSize: 'clamp(0.75rem, 1.4vmin, 20rem)',
           textTransform: 'uppercase',
-          fontFamily: 'var(--arcade-font)',
           letterSpacing: '3px',
           color: 'var(--text-dim)',
           marginBottom: 'clamp(1rem, 2.5vh, 2rem)',
@@ -41,8 +40,8 @@ export default function IncoAttract() {
           Trivia interactiva · InCo
         </p>
 
-        <h1 className="arcade-title" style={{
-          fontSize: 'clamp(2rem, 5.5vmin, 4rem)',
+        <h1 style={{
+          fontSize: 'clamp(2rem, 5.5vmin, 20rem)',
           fontWeight: 800,
           lineHeight: 1.15,
           marginBottom: 'clamp(2rem, 5vh, 4rem)',
@@ -50,11 +49,11 @@ export default function IncoAttract() {
           Conocé qué hacemos en el InCo
         </h1>
 
-        <motion.p className="arcade-hint"
+        <motion.p
           animate={{ opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           style={{
-            fontSize: 'clamp(0.9rem, 2vmin, 1.3rem)',
+            fontSize: 'clamp(0.9rem, 2vmin, 20rem)',
             color: 'var(--text-dim)',
           }}
         >
@@ -83,9 +82,8 @@ export default function IncoAttract() {
           }}
         >
           <p style={{
-            fontSize: 'clamp(0.7rem, 1.2vmin, 0.9rem)',
+            fontSize: 'clamp(0.9rem, 2vmin, 20rem)',
             textTransform: 'uppercase',
-          fontFamily: 'var(--arcade-font)',
             letterSpacing: '2px',
             color: '#0ea5a0',
             marginBottom: '0.6em',
@@ -93,12 +91,12 @@ export default function IncoAttract() {
             ¿Qué hacemos en el InCo?
           </p>
           <p style={{
-            fontSize: 'clamp(1rem, 2.4vmin, 1.5rem)',
+            fontSize: 'clamp(1.1rem, 3.2vmin, 20rem)',
             color: 'var(--text)',
             lineHeight: 1.6,
           }}>
-            Investigamos cómo usar la computación para resolver problemas
-            reales: la salud, el campo, la seguridad, la educación y mucho más.
+            Investigamos cómo usar la computación para resolver problemas reales
+            vinculados a: la salud, el campo, la seguridad, la educación y mucho más.
           </p>
         </motion.div>
 
@@ -114,9 +112,8 @@ export default function IncoAttract() {
           }}
         >
           <p style={{
-            fontSize: 'clamp(0.7rem, 1.2vmin, 0.9rem)',
+            fontSize: 'clamp(0.9rem, 2vmin, 20rem)',
             textTransform: 'uppercase',
-          fontFamily: 'var(--arcade-font)',
             letterSpacing: '2px',
             color: '#eab308',
             marginBottom: '0.6em',
@@ -124,7 +121,7 @@ export default function IncoAttract() {
             ¿Cómo se juega?
           </p>
           <p style={{
-            fontSize: 'clamp(1rem, 2.4vmin, 1.5rem)',
+            fontSize: 'clamp(1.1rem, 3.2vmin, 20rem)',
             color: 'var(--text)',
             lineHeight: 1.6,
           }}>

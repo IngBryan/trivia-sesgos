@@ -46,10 +46,9 @@ export default function Question({ payload }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
         style={{
-          fontSize: 'clamp(0.85rem, 2vmin, 1.3rem)',
+          fontSize: 'clamp(0.85rem, 2vmin, 20rem)',
           color: 'var(--text-dim)',
           textTransform: 'uppercase',
-          fontFamily: 'var(--arcade-font)',
           letterSpacing: '2px',
           marginBottom: 'clamp(0.75rem, 2vh, 1.5rem)',
         }}
@@ -57,12 +56,12 @@ export default function Question({ payload }) {
         Pregunta {payload.index} de {payload.total}
       </motion.p>
 
-      <motion.h1 className="arcade-heading"
+      <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15, type: 'spring', stiffness: 250, damping: 20 }}
         style={{
-          fontSize: 'clamp(1.6rem, 5vmin, 3.8rem)',
+          fontSize: 'clamp(1.6rem, 5vmin, 20rem)',
           fontWeight: 700,
           marginBottom: 'clamp(1rem, 3vh, 2rem)',
         }}
@@ -76,7 +75,7 @@ export default function Question({ payload }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.4 }}
           style={{
-            fontSize: 'clamp(1.5rem, 4.5vmin, 3.2rem)',
+            fontSize: 'clamp(1.5rem, 4.5vmin, 20rem)',
             fontWeight: 300,
             marginBottom: 'clamp(2rem, 6vh, 4rem)',
             lineHeight: 1.4,
@@ -106,14 +105,14 @@ export default function Question({ payload }) {
         ))}
       </motion.div>
 
-      <motion.p className="arcade-hint"
+      <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ delay: 0.6 }}
         style={{
           marginTop: 'clamp(1.5rem, 4vh, 3rem)',
           color: 'var(--text-dim)',
-          fontSize: 'clamp(0.85rem, 2vmin, 1.3rem)',
+          fontSize: 'clamp(0.85rem, 2vmin, 20rem)',
         }}
       >
         Presioná A, B o C para elegir

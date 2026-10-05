@@ -13,7 +13,7 @@ export default function Intro() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         style={{
-          fontSize: 'clamp(1.6rem, 5vmin, 3.5rem)',
+          fontSize: 'clamp(1.6rem, 5vmin, 20rem)',
           fontWeight: 700,
           marginBottom: 'clamp(1rem, 3vh, 2rem)',
         }}
@@ -25,9 +25,9 @@ export default function Intro() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
         style={{
-          fontSize: 'clamp(1rem, 2.5vmin, 1.6rem)',
+          fontSize: 'clamp(1rem, 2.5vmin, 20rem)',
           color: 'var(--text-dim)',
-          maxWidth: '700px',
+          maxWidth: '70vw',
           lineHeight: 1.6,
         }}
       >
@@ -39,7 +39,7 @@ export default function Intro() {
         animate={{ opacity: [0.3, 0.7, 0.3] }}
         transition={{ delay: 0.5, duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
         style={{
-          fontSize: 'clamp(0.85rem, 2vmin, 1.2rem)',
+          fontSize: 'clamp(0.85rem, 2vmin, 20rem)',
           color: 'var(--text-dim)',
           marginTop: 'clamp(1.5rem, 4vh, 3rem)',
         }}

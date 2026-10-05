@@ -1,139 +1,111 @@
 import { motion } from 'motion/react'
 import { Bot, Cpu } from 'lucide-react'
 
-const ARCADE_FONT = "Impact, Haettenschweiler, 'Arial Black', sans-serif"
-
-const PANELS = {
-  left: {
+const MODES = [
+  {
     letter: 'A',
     title: 'Sesgos de género',
     subtitle: 'en la Inteligencia Artificial',
     Icon: Bot,
-    glow: '#4a6cf7',
-    bg: 'linear-gradient(120deg, #0b1240 0%, #1f3acb 100%)',
-    clip: 'polygon(0 0, 56% 0, 44% 100%, 0 100%)',
-    fromX: '-100%',
-    textStyle: { left: '5%', width: '35%', alignItems: 'flex-start', textAlign: 'left' },
-    blinkDelay: 0,
+    bg: 'linear-gradient(160deg, #101a4f 0%, #1f3acb 100%)',
+    fromX: -60,
   },
-  right: {
+  {
     letter: 'B',
     title: 'Conocé qué hacemos en el InCo',
     subtitle: 'Problemas reales que se resuelven con computación',
     Icon: Cpu,
-    glow: '#0ea5a0',
-    bg: 'linear-gradient(240deg, #032b29 0%, #0d9488 100%)',
-    clip: 'polygon(56% 0, 100% 0, 100% 100%, 44% 100%)',
-    fromX: '100%',
-    textStyle: { right: '5%', width: '35%', alignItems: 'flex-end', textAlign: 'right' },
-    blinkDelay: 1.2,
+    bg: 'linear-gradient(160deg, #052e2c 0%, #0d9488 100%)',
+    fromX: 60,
   },
-}
+]
 
-function Panel({ cfg }) {
-  const { letter, title, subtitle, Icon, glow, bg, clip, fromX, textStyle, blinkDelay } = cfg
+function Panel({ mode }) {
+  const { letter, title, subtitle, Icon, bg, fromX } = mode
   return (
     <motion.div
-      initial={{ x: fromX }}
-      animate={{ x: 0 }}
-      transition={{ type: 'spring', stiffness: 90, damping: 18, delay: 0.1 }}
-      style={{ position: 'absolute', inset: 0, clipPath: clip, background: bg, overflow: 'hidden' }}
+      initial={{ opacity: 0, x: fromX }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'spring', stiffness: 120, damping: 20, delay: 0.1 }}
+      style={{
+        position: 'relative',
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 'clamp(0.75rem, 2.5vh, 2rem)',
+        padding: 'clamp(1.5rem, 4vw, 4rem)',
+        background: bg,
+        overflow: 'hidden',
+        textAlign: 'center',
+      }}
     >
-      {/* Pulso de brillo, alternado entre ambos lados */}
-      <motion.div
-        animate={{ opacity: [0, 0.35, 0] }}
-        transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: blinkDelay }}
-        style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle at 50% 55%, ${glow}, transparent 65%)` }}
-      />
-      {/* Líneas de velocidad */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        opacity: 0.12,
-        background: 'repeating-linear-gradient(100deg, #fff 0 2px, transparent 2px 46px)',
-      }} />
-      {/* Icono gigante de fondo */}
+      {/* Icono grande de fondo, muy tenue */}
       <Icon
         strokeWidth={1}
         style={{
           position: 'absolute',
-          width: '60vmin',
-          height: '60vmin',
+          width: '55vmin',
+          height: '55vmin',
           top: '50%',
-          left: letter === 'A' ? '2%' : 'auto',
-          right: letter === 'B' ? '2%' : 'auto',
-          transform: 'translateY(-50%)',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
           color: '#fff',
-          opacity: 0.1,
+          opacity: 0.07,
+          pointerEvents: 'none',
         }}
       />
 
       <div style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
+        position: 'relative',
+        width: 'clamp(70px, 15vmin, 150px)',
+        height: 'clamp(70px, 15vmin, 150px)',
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,0.12)',
+        border: '3px solid rgba(255,255,255,0.85)',
         display: 'flex',
-        flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
-        gap: 'clamp(0.75rem, 2.5vh, 2rem)',
-        ...textStyle,
+        fontSize: 'clamp(2.2rem, 8vmin, 20rem)',
+        fontWeight: 800,
+        color: '#fff',
       }}>
-        <motion.div
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut', delay: blinkDelay }}
-          style={{
-            width: 'clamp(70px, 16vmin, 160px)',
-            height: 'clamp(70px, 16vmin, 160px)',
-            borderRadius: '50%',
-            background: `radial-gradient(circle at 35% 30%, #fff 0%, ${glow} 45%, #000 140%)`,
-            boxShadow: `0 0 40px ${glow}, 0 8px 0 rgba(0,0,0,0.45)`,
-            border: '4px solid rgba(255,255,255,0.85)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontFamily: ARCADE_FONT,
-            fontSize: 'clamp(2.5rem, 9vmin, 6rem)',
-            color: '#fff',
-            textShadow: '0 3px 0 rgba(0,0,0,0.5)',
-          }}
-        >
-          {letter}
-        </motion.div>
-
-        <h2 style={{
-          fontFamily: ARCADE_FONT,
-          fontSize: 'clamp(1.6rem, 6vmin, 4.2rem)',
-          fontWeight: 400,
-          fontStyle: 'italic',
-          textTransform: 'uppercase',
-          lineHeight: 1.05,
-          color: '#fff',
-          textShadow: `0 0 24px ${glow}, 0 4px 0 rgba(0,0,0,0.5)`,
-        }}>
-          {title}
-        </h2>
-        <p style={{
-          fontSize: 'clamp(0.85rem, 2.2vmin, 1.5rem)',
-          color: 'rgba(255,255,255,0.85)',
-        }}>
-          {subtitle}
-        </p>
-
-        <motion.p
-          animate={{ opacity: [1, 0.15, 1] }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut', delay: blinkDelay }}
-          style={{
-            fontFamily: ARCADE_FONT,
-            fontSize: 'clamp(1rem, 3vmin, 2rem)',
-            letterSpacing: '4px',
-            textTransform: 'uppercase',
-            color: '#fff',
-            textShadow: `0 0 14px ${glow}`,
-          }}
-        >
-          Presioná {letter}
-        </motion.p>
+        {letter}
       </div>
+
+      <h2 style={{
+        position: 'relative',
+        fontSize: 'clamp(1.6rem, 5vmin, 20rem)',
+        fontWeight: 800,
+        lineHeight: 1.1,
+        color: '#fff',
+      }}>
+        {title}
+      </h2>
+
+      <p style={{
+        position: 'relative',
+        fontSize: 'clamp(0.95rem, 2.4vmin, 20rem)',
+        color: 'rgba(255,255,255,0.85)',
+        maxWidth: '28ch',
+      }}>
+        {subtitle}
+      </p>
+
+      <p style={{
+        position: 'relative',
+        marginTop: 'clamp(0.5rem, 2vh, 1.5rem)',
+        padding: '0.5rem 1.4rem',
+        borderRadius: '999px',
+        border: '2px solid rgba(255,255,255,0.7)',
+        fontSize: 'clamp(0.9rem, 2.2vmin, 20rem)',
+        fontWeight: 700,
+        color: '#fff',
+        letterSpacing: '1px',
+      }}>
+        Presioná {letter}
+      </p>
     </motion.div>
   )
 }
@@ -145,78 +117,32 @@ export default function ModeSelect() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      style={{ position: 'relative', padding: 0, overflow: 'hidden', background: '#05050f' }}
+      style={{ padding: 0, justifyContent: 'flex-start' }}
     >
-      <Panel cfg={PANELS.left} />
-      <Panel cfg={PANELS.right} />
-
-      {/* Corte diagonal central */}
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
-      >
-        <motion.line
-          x1="56" y1="0" x2="44" y2="100"
-          stroke="#fff"
-          strokeWidth="5"
-          vectorEffect="non-scaling-stroke"
-          style={{ filter: 'drop-shadow(0 0 10px #fff)' }}
-          animate={{ opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 0.8, repeat: Infinity }}
-        />
-      </svg>
-
-      {/* Título superior */}
-      <motion.h1
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, type: 'spring', stiffness: 140, damping: 14 }}
-        style={{
-          position: 'absolute',
-          top: 'clamp(0.75rem, 3vh, 2rem)',
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          fontFamily: ARCADE_FONT,
-          fontWeight: 400,
-          fontSize: 'clamp(1.6rem, 5.5vmin, 4rem)',
-          letterSpacing: '6px',
+      <div style={{
+        width: '100%',
+        padding: 'clamp(0.75rem, 2.5vh, 2rem) 1rem',
+        background: 'var(--card-bg)',
+      }}>
+        <p style={{
+          fontSize: 'clamp(0.7rem, 1.3vmin, 20rem)',
           textTransform: 'uppercase',
-          color: '#fff',
-          textShadow: '0 0 20px rgba(255,255,255,0.7), 0 4px 0 rgba(0,0,0,0.6)',
-        }}
-      >
-        ¡Elegí tu trivia!
-      </motion.h1>
+          letterSpacing: '3px',
+          color: 'var(--text-dim)',
+          marginBottom: '0.3rem',
+        }}>
+          Trivia interactiva · FING
+        </p>
+        <h1 style={{ fontSize: 'clamp(1.5rem, 4.5vmin, 20rem)', fontWeight: 800 }}>
+          ¿Qué trivia querés jugar?
+        </h1>
+      </div>
 
-      {/* VS central */}
-      <motion.div
-        initial={{ scale: 0, rotate: -25 }}
-        animate={{ scale: [0, 1.5, 1], rotate: 0 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          x: '-50%',
-          y: '-50%',
-        }}
-      >
-        <motion.div
-          animate={{ scale: [1, 1.12, 1] }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
-          style={{
-            fontFamily: ARCADE_FONT,
-            fontStyle: 'italic',
-            fontSize: 'clamp(3rem, 14vmin, 10rem)',
-            color: '#facc15',
-            textShadow: '0 0 30px #eab308, 5px 5px 0 #7c2d12, -2px -2px 0 #000',
-          }}
-        >
-          VS
-        </motion.div>
-      </motion.div>
+      <div style={{ flex: 1, width: '100%', display: 'flex', minHeight: 0 }}>
+        {MODES.map((m) => (
+          <Panel key={m.letter} mode={m} />
+        ))}
+      </div>
     </motion.div>
   )
 }
