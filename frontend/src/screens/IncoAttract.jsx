@@ -37,7 +37,7 @@ export default function IncoAttract() {
           color: 'var(--text-dim)',
           marginBottom: 'clamp(1rem, 2.5vh, 2rem)',
         }}>
-          Trivia interactiva · InCo
+          Trivia interactiva · Instituto de Computación
         </p>
 
         <h1 style={{
@@ -46,7 +46,7 @@ export default function IncoAttract() {
           lineHeight: 1.15,
           marginBottom: 'clamp(2rem, 5vh, 4rem)',
         }}>
-          Conocé qué hacemos en el InCo
+          Conocé qué hacemos en el Instituto de Computación
         </h1>
 
         <motion.p
@@ -88,7 +88,7 @@ export default function IncoAttract() {
             color: '#0ea5a0',
             marginBottom: '0.6em',
           }}>
-            ¿Qué hacemos en el InCo?
+            ¿Qué hacemos en el Instituto de Computación?
           </p>
           <p style={{
             fontSize: 'clamp(1.1rem, 3.2vmin, 20rem)',
@@ -96,7 +96,7 @@ export default function IncoAttract() {
             lineHeight: 1.6,
           }}>
             Investigamos cómo usar la computación para resolver problemas reales
-            vinculados a: la salud, el campo, la seguridad, la educación y mucho más.
+            vinculados a: la salud, el campo, la educación y mucho más.
           </p>
         </motion.div>
 
@@ -125,8 +125,8 @@ export default function IncoAttract() {
             color: 'var(--text)',
             lineHeight: 1.6,
           }}>
-            Elegí la problemática que más te interese y descubrí
-            qué grupo de investigación trabaja en resolverla.
+            Elegí la pregunta que más te llame la atención y descubrí
+            qué grupo de investigación trabaja en ese tema.
           </p>
         </motion.div>
       </div>

@@ -27,16 +27,16 @@ function GenderRecap({ payload }) {
         {matches} / {total}
       </motion.div>
       <p style={{ fontSize: 'clamp(1rem, 2.6vmin, 20rem)', marginTop: '0.8rem' }}>
-        Coincidiste con la IA en {matches} de {total} {total === 1 ? 'respuesta' : 'respuestas'}
+        Coincidiste con la Inteligencia Artificial en {matches} de {total} {total === 1 ? 'respuesta' : 'respuestas'}
       </p>
       <p style={{ fontSize: 'clamp(0.85rem, 2vmin, 20rem)', color: 'var(--text-dim)', marginTop: '0.4rem' }}>
-        La IA aprende de textos humanos y puede repetir sus sesgos.
+        La Inteligencia Artificial aprende de textos humanos y puede repetir sus sesgos.
       </p>
     </div>
   )
 }
 
-// Resultado de la trivia InCo: los grupos de investigación que fue descubriendo.
+// Resultado de la trivia del Instituto de Computación: los grupos de investigación que fue descubriendo.
 function IncoRecap({ payload }) {
   const { groups } = payload
   return (

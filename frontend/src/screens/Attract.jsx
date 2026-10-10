@@ -117,14 +117,14 @@ export default function Attract() {
             color: '#9333ea',
             marginBottom: '0.6em',
           }}>
-            ¿Por qué la IA puede estar sesgada?
+            ¿Por qué la Inteligencia Artificial puede estar sesgada?
           </p>
           <p style={{
             fontSize: 'clamp(1.1rem, 3.2vmin, 20rem)',
             color: 'var(--text)',
             lineHeight: 1.6,
           }}>
-            La IA aprende de grandes volúmenes de texto humano y puede
+            La Inteligencia Artificial aprende de grandes volúmenes de texto humano y puede
             reproducir esos sesgos sin que nadie se lo haya enseñado
             explícitamente.
           </p>

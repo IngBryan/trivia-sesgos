@@ -12,7 +12,7 @@ const MODES = [
   },
   {
     letter: 'B',
-    title: 'Conocé qué hacemos en el InCo',
+    title: 'Conocé qué hacemos en el Instituto de Computación',
     subtitle: 'Problemas reales que se resuelven con computación',
     Icon: Cpu,
     bg: 'linear-gradient(160deg, #052e2c 0%, #0d9488 100%)',
@@ -121,11 +121,11 @@ export default function ModeSelect() {
     >
       <div style={{
         width: '100%',
-        padding: 'clamp(0.75rem, 2.5vh, 2rem) 1rem',
+        padding: 'clamp(1rem, 3.5vh, 3rem) 1rem',
         background: 'var(--card-bg)',
       }}>
         <p style={{
-          fontSize: 'clamp(0.7rem, 1.3vmin, 20rem)',
+          fontSize: 'clamp(0.85rem, 2vmin, 20rem)',
           textTransform: 'uppercase',
           letterSpacing: '3px',
           color: 'var(--text-dim)',
@@ -133,7 +133,7 @@ export default function ModeSelect() {
         }}>
           Trivia interactiva · FING
         </p>
-        <h1 style={{ fontSize: 'clamp(1.5rem, 4.5vmin, 20rem)', fontWeight: 800 }}>
+        <h1 style={{ fontSize: 'clamp(2.2rem, 7.5vmin, 20rem)', fontWeight: 800 }}>
           ¿Qué trivia querés jugar?
         </h1>
       </div>

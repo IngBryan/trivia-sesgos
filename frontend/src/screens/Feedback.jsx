@@ -89,15 +89,17 @@ function ResearchFeedback({ payload }) {
       transition={{ delay: 0.2, type: 'spring', stiffness: 250, damping: 22 }}
     >
       <div className="research-col research-col-photo">
-        {payload.chosenText && (
-          <p className="research-chosen-label">{payload.chosenText}</p>
-        )}
         <PhotoAlbum photos={photos} alt={payload.groupName} />
       </div>
 
       <div className="research-col research-col-info">
-        <p className="research-group-name">{payload.groupName ?? 'Grupo por confirmar'}</p>
-        <p className="research-description">{payload.groupDescription ?? 'Información del grupo próximamente.'}</p>
+        {payload.chosenText && (
+          <p className="research-chosen-label">{payload.chosenText}</p>
+        )}
+        <div className="research-answer">
+          <p className="research-group-name">{payload.groupName ?? 'Grupo por confirmar'}</p>
+          <p className="research-description">{payload.groupDescription ?? 'Información del grupo próximamente.'}</p>
+        </div>
       </div>
     </motion.div>
   )
@@ -187,7 +189,7 @@ export default function Feedback({ payload }) {
             background: 'linear-gradient(160deg, #1a0d2d 0%, var(--card-bg) 60%)',
           }}
         >
-          <p className="fb-col-label" style={{ color: '#9333ea' }}>La IA elegiría</p>
+          <p className="fb-col-label" style={{ color: '#9333ea' }}>La Inteligencia Artificial elegiría</p>
           <IconCircle
             gradient="var(--option-c)"
             icon={<Sparkles size="55%" />}
@@ -215,7 +217,7 @@ export default function Feedback({ payload }) {
           <p className="fb-col-label" style={{ color: '#4a6cf7' }}>¿Por qué?</p>
           <p className="fb-col-text">
             {payload.explanation ??
-              'La IA aprende de grandes volúmenes de texto humano y reproduce los estereotipos de género que aparecen con frecuencia en esos datos.'}
+              'La Inteligencia Artificial aprende de grandes volúmenes de texto humano y reproduce los estereotipos de género que aparecen con frecuencia en esos datos.'}
           </p>
         </motion.div>
       </motion.div>}

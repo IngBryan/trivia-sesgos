@@ -32,7 +32,7 @@ export default function Intro() {
         }}
       >
         Vas a ver una serie de frases incompletas. Elegí la opción que creas que
-        la IA elegiría para completarla.
+        la Inteligencia Artificial elegiría para completarla.
       </motion.p>
       <motion.p
         initial={{ opacity: 0 }}

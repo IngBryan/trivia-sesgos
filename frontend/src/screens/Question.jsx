@@ -24,7 +24,7 @@ const cardVariants = {
 
 const HEADINGS = {
   SESGO: '¿Cómo completaría esta frase una inteligencia artificial?',
-  INVESTIGACION: '¿Qué problemática te interesa resolver?',
+  INVESTIGACION: '¿Qué pregunta te interesa responder?',
 }
 
 export default function Question({ payload }) {
