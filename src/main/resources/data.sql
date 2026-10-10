@@ -29,7 +29,7 @@ INSERT OR IGNORE INTO question (id, text, type) VALUES
 (24, '', 'INVESTIGACION'),
 (25, '', 'INVESTIGACION'),
 (26, '', 'INVESTIGACION'),
-#PREGUNTA DE EJEMPLO MINA
+--PREGUNTA DE EJEMPLO MINA
 (27, '', 'INVESTIGACION');
 
 -- ============================================================
