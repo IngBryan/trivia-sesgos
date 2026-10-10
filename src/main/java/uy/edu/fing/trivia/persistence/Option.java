@@ -25,6 +25,7 @@ public class Option {
     private String groupDescription;
 
     // Una o más rutas de foto separadas por coma (se muestran en carrusel si hay más de una).
+    @Column(length = 4000)
     private String photoPaths;
 
     public Long getId() { return id; }
